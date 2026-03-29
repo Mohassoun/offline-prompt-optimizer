@@ -1,0 +1,168 @@
+{
+  "name": "offline-prompt-optimizer",
+  "displayName": "Offline Prompt Optimizer",
+  "description": "Offline Prompt Optimizer compresses coding prompts locally to reduce token usage and preserve intent without internet access.",
+  "icon": "src/images/icon.png",
+  "version": "0.1.0",
+  "publisher": "mohamad--hassoun",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Other"
+  ],
+  "keywords": [
+    "offline prompt optimizer",
+    "prompt optimizer",
+    "prompt compression",
+    "token reduction",
+    "local ai",
+    "privacy",
+    "on-device",
+    "vscode prompt tool",
+    "llm prompt",
+    "prompt engineering"
+  ],
+  "preview": true,
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "offline-prompt-optimizer.openPromptOptimizer",
+        "title": "Open Prompt Optimizer"
+      },
+      {
+        "command": "offline-prompt-optimizer.compressSelection",
+        "title": "Compress Selected Prompt"
+      },
+      {
+        "command": "offline-prompt-optimizer.previewCompressionDiff",
+        "title": "Preview Compression Diff"
+      },
+      {
+        "command": "offline-prompt-optimizer.copyCompressedPrompt",
+        "title": "Copy Compressed Prompt"
+      },
+      {
+        "command": "offline-prompt-optimizer.toggleCompressionMode",
+        "title": "Toggle Compression Mode"
+      },
+      {
+        "command": "offline-prompt-optimizer.setupLocalAI",
+        "title": "Offline Prompt Optimizer: Setup Local AI"
+      },
+      {
+        "command": "offline-prompt-optimizer.repairLocalAI",
+        "title": "Offline Prompt Optimizer: Repair Local AI Setup"
+      },
+      {
+        "command": "offline-prompt-optimizer.removeLocalAIAssets",
+        "title": "Offline Prompt Optimizer: Remove Local AI Assets"
+      },
+      {
+        "command": "offline-prompt-optimizer.showLocalAIStatus",
+        "title": "Offline Prompt Optimizer: Show Local AI Status"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "offline-prompt-optimizer.compressSelection",
+          "when": "editorHasSelection",
+          "group": "navigation@1"
+        },
+        {
+          "command": "offline-prompt-optimizer.openPromptOptimizer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "offline-prompt-optimizer.previewCompressionDiff",
+          "group": "navigation@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Offline Prompt Optimizer",
+      "properties": {
+        "offlinePromptOptimizer.defaultMode": {
+          "type": "string",
+          "enum": [
+            "safe",
+            "balanced",
+            "aggressive"
+          ],
+          "default": "balanced",
+          "description": "Default compression mode."
+        },
+        "offlinePromptOptimizer.defaultTokenizer": {
+          "type": "string",
+          "enum": [
+            "gpt-tokenizer"
+          ],
+          "default": "gpt-tokenizer",
+          "description": "Tokenizer to use for token counting."
+        },
+        "offlinePromptOptimizer.protectedPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional regex patterns to protect from compression."
+        },
+        "offlinePromptOptimizer.localAI.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable local AI mode for AI-assisted compression."
+        },
+        "offlinePromptOptimizer.localAI.runtime": {
+          "type": "string",
+          "enum": [
+            "llamafile",
+            "llama.cpp"
+          ],
+          "default": "llamafile",
+          "description": "Preferred local AI runtime."
+        },
+        "offlinePromptOptimizer.localAI.modelProfile": {
+          "type": "string",
+          "enum": [
+            "nano",
+            "low-memory",
+            "balanced"
+          ],
+          "enumDescriptions": [
+            "SmolLM2 360M Instruct — English-optimised, ~386 MB, runs on any device (4 GB RAM+)",
+            "Phi-3 Mini Q4 — ~2.4 GB, good quality, needs 8 GB RAM",
+            "Mistral 7B Instruct Q4 — ~4.4 GB, best quality, needs 16 GB RAM"
+          ],
+          "default": "nano",
+          "description": "Model profile for local AI compression assistance."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "esbuild ./src/extension.ts --bundle --outfile=./dist/extension.js --external:vscode --external:@huggingface/transformers --platform=node --format=cjs",
+    "watch": "esbuild ./src/extension.ts --bundle --outfile=./dist/extension.js --external:vscode --external:@huggingface/transformers --platform=node --format=cjs --watch",
+    "compile": "tsc --noEmit",
+    "package": "vsce package",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
+    "diff": "^5.2.0",
+    "gpt-tokenizer": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/diff": "^5.2.1",
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.3.8",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.3",
+    "vitest": "^4.1.2"
+  }
+}
