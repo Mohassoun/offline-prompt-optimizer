@@ -3,7 +3,7 @@
   "displayName": "Offline Prompt Optimizer",
   "description": "Offline Prompt Optimizer compresses coding prompts locally to reduce token usage and preserve intent without internet access.",
   "icon": "src/images/icon.png",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "mohamad--hassoun",
   "engines": {
     "vscode": "^1.85.0"
